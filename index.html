@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>民情慧眼 - 智慧陳情系統</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>民情慧眼：智慧陳情系統</h1>
+        <div class="chatbot-window">
+            <div id="messages" class="messages">
+                <div class="message system-message">
+                    您好！我是您的智慧陳情小幫手，請簡要描述您的問題。
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="userInput" placeholder="輸入您的陳情內容...">
+                <button onclick="sendMessage()">提交</button>
+            </div>
+        </div>
+        <div class="case-info" id="caseInfo">
+            <h2>案件資訊</h2>
+            <div id="caseDetails" class="details-content">
+                <p>請提交您的陳情，此處將顯示案件摘要。</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
