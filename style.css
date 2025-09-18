@@ -1,107 +1,610 @@
-body {
-    font-family: '微軟正黑體', 'Arial', sans-serif;
-    background-color: #f4f7f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+/* Basic Reset & Typography */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f7f6;
 }
 
 .container {
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 900px;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-h1 {
-    text-align: center;
-    color: #333;
+a {
+    color: #007bff;
+    text-decoration: none;
 }
 
-.chatbot-window {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    background-color: #fafafa;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.messages {
-    height: 300px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-}
-
-.message {
-    padding: 10px 15px;
-    border-radius: 18px;
-    max-width: 80%;
-    line-height: 1.6;
-}
-
-.user-message {
-    background-color: #007bff;
-    color: #fff;
-    align-self: flex-end;
-}
-
-.system-message {
-    background-color: #e9ecef;
-    color: #333;
-    align-self: flex-start;
-}
-
-.input-area {
-    display: flex;
-    gap: 10px;
-}
-
-#userInput {
-    flex-grow: 1;
-    padding: 10px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
+a:hover {
+    text-decoration: underline;
 }
 
 button {
-    background-color: #28a745;
-    color: #fff;
+    cursor: pointer;
     border: none;
     padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #218838;
+/* Header */
+.main-header {
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.case-info {
-    border: 1px solid #ddd;
+.top-bar {
+    background-color: #f0f0f0;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.top-bar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar .left-info .flag-icon {
+    vertical-align: middle;
+    margin-right: 8px;
+    border-radius: 3px;
+}
+
+.top-bar .right-info a {
+    color: #555;
+    margin-left: 15px;
+}
+
+.main-nav {
+    padding: 15px 0;
+    display: flex;
+    align-items: center;
+}
+
+.main-nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-nav .logo {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav .logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.main-nav .logo h1 {
+    font-size: 24px;
+    color: #004d80;
+    margin-right: 10px;
+}
+
+.main-nav .logo p {
+    font-size: 14px;
+    color: #666;
+    border-left: 1px solid #ccc;
+    padding-left: 10px;
+}
+
+.main-nav .nav-links {
+    list-style: none;
+    display: flex;
+    margin-left: auto; /* Pushes nav links to the center */
+}
+
+.main-nav .nav-links li {
+    margin-left: 30px;
+}
+
+.main-nav .nav-links a {
+    color: #333;
+    font-weight: 500;
+    font-size: 17px;
+    transition: color 0.3s ease;
+}
+
+.main-nav .nav-links a:hover,
+.main-nav .nav-links a.active {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #009688; /* A shade of teal for secondary actions */
+    color: #fff;
+    padding: 12px 25px;
+    font-size: 18px;
+    margin: 0 10px;
+}
+
+.btn-secondary:hover {
+    background-color: #00796b;
+}
+
+.btn-link {
+    background: none;
+    color: #007bff;
+    padding: 5px 10px;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+.btn-link:hover {
+    color: #0056b3;
+}
+
+
+/* Page Management */
+.page {
+    display: none;
+    padding: 40px 0;
+}
+
+.page.active {
+    display: block;
+}
+
+/* Home Page */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://via.placeholder.com/1500x500/34495e/ffffff?text=Background+Image') no-repeat center center/cover;
+    color: #fff;
+    text-align: center;
+    padding: 80px 0;
+}
+
+.hero-section h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.hero-section p {
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+.hero-buttons button {
+    margin: 0 15px;
+}
+
+.hero-buttons i {
+    margin-right: 8px;
+}
+
+.features-section {
+    display: flex;
+    justify-content: space-around;
+    padding: 60px 0;
+    background-color: #eef3f6;
+    border-top: 1px solid #ddd;
+}
+
+.feature-item {
+    text-align: center;
+    flex-basis: 30%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.feature-item i {
+    font-size: 50px;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.feature-item h3 {
+    font-size: 24px;
+    color: #333;
+}
+
+/* Petition Page */
+.petition-form-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    margin: 40px auto;
+    max-width: 1000px;
+}
+
+.petition-form-container h2 {
+    font-size: 32px;
+    color: #004d80;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.petition-form-container .subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.form-content {
+    display: flex;
+    gap: 30px;
+}
+
+.main-form {
+    flex: 2;
+}
+
+.ai-analysis-sidebar {
+    flex: 1;
+    background-color: #f9f9f9;
+    border-left: 1px solid #eee;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.ai-hint {
+    background-color: #e0f2f7;
+    color: #007bff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.ai-hint i {
+    margin-right: 10px;
+}
+
+textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    min-height: 200px;
+    resize: vertical;
+    margin-bottom: 15px;
+}
+
+.form-tip {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.checkbox-group {
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group input {
+    margin-right: 10px;
+}
+
+.ai-analysis-sidebar h3 {
+    font-size: 20px;
+    color: #004d80;
+    margin-bottom: 20px;
+}
+
+.ai-card {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.ai-card h4 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.ai-card .category-tags .tag {
+    display: inline-block;
+    background-color: #e9f5ff;
+    color: #007bff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin-right: 8px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.ai-card .category-tags .tag i {
+    margin-right: 5px;
+}
+
+.green-dot { color: #28a745; }
+.blue-dot { color: #007bff; }
+.gray-dot { color: #6c757d; }
+
+.ai-card p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.ai-card .label {
+    font-weight: 500;
+    color: #333;
+    margin-right: 5px;
+}
+
+/* Query Page */
+.query-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    margin: 40px auto;
+    max-width: 1200px;
+}
+
+.query-container h2 {
+    font-size: 32px;
+    color: #004d80;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.query-container .subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.search-bar {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    font-size: 17px;
+}
+
+.search-bar button {
+    border-radius: 0 5px 5px 0;
+    padding: 12px 25px;
+    font-size: 17px;
+}
+
+.query-content {
+    display: flex;
+    gap: 30px;
+}
+
+.petition-list {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.petition-card {
+    background-color: #f8fcfd;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 20px;
-    background-color: #f8f9fa;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.details-content {
-    background-color: #fff;
-    border: 1px dashed #ccc;
-    padding: 15px;
-    border-radius: 6px;
-    white-space: pre-wrap;
-    line-height: 1.8;
+.petition-card .card-title {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.petition-card p {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.petition-card .label {
+    font-size: 14px;
+    color: #777;
+    margin-top: 10px;
+    display: block;
+}
+
+.petition-card .status {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.petition-card .status i {
+    margin-right: 8px;
+}
+
+.petition-card .status.processing { color: #28a745; } /* Green */
+.petition-card .status.filed { color: #007bff; } /* Blue */
+.petition-card .status.closed { color: #6c757d; } /* Gray */
+
+.petition-card .status-text {
+    font-size: 15px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #007bff; /* Default status background */
+    margin-left: 10px;
+}
+.petition-card .status.processing .status-text { background-color: #28a745; }
+.petition-card .status.filed .status-text { background-color: #007bff; }
+.petition-card .status.closed .status-text { background-color: #6c757d; }
+
+
+.petition-card .last-update {
+    font-size: 13px;
+    color: #999;
+    margin-top: 15px;
+}
+
+.petition-card .btn-link {
+    align-self: flex-end; /* Pushes button to bottom-right */
+}
+
+
+.ai-chatbot-sidebar {
+    flex: 1;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 500px; /* Fixed height for demo */
+}
+
+.chatbot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.chatbot-header h3 {
+    font-size: 20px;
+    color: #004d80;
+}
+
+.chatbot-header .close-chatbot {
+    background: none;
+    color: #666;
+    font-size: 18px;
+    padding: 5px;
+}
+
+.chatbot-body {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 10px; /* For scrollbar */
+    margin-bottom: 15px;
+}
+
+.chatbot-message {
+    padding: 8px 12px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    max-width: 80%;
+    font-size: 15px;
+}
+
+.chatbot-message.bot {
+    background-color: #e0f7fa;
+    color: #004d80;
+    align-self: flex-start;
+}
+
+.chatbot-message.user {
+    background-color: #007bff;
+    color: #fff;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.chatbot-input {
+    display: flex;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.chatbot-input input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin-right: 10px;
+    font-size: 15px;
+}
+
+.chatbot-input button {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+
+/* Footer */
+.main-footer {
+    background-color: #34495e;
+    color: #fff;
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.main-footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-right a {
+    color: #fff;
+    margin-left: 20px;
+}
+
+.footer-right a:hover {
+    color: #ccc;
+    text-decoration: none;
 }

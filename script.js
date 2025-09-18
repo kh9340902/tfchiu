@@ -1,68 +1,133 @@
-// 模擬一個簡單的LLM回應
-function getLLMResponse(input) {
-    const keywords = ['紅綠燈', '交通', '路燈', '道路', '設施'];
-    const hasKeyword = keywords.some(keyword => input.includes(keyword));
+document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const heroButtons = document.querySelectorAll('.hero-section .btn-secondary');
+    const pages = document.querySelectorAll('.main-content .page');
 
-    if (hasKeyword && input.includes('新北')) {
-        const extractedInfo = {
-            '地點': '新北市',
-            '事由': '紅綠燈故障',
-            '問題': '交通混亂',
-            '發生時間': '已持續數天'
-        };
-        const summary = `【案件摘要】\n地點：${extractedInfo['地點']}\n事由：${extractedInfo['事由']}\n問題：${extractedInfo['問題']}\n發生時間：${extractedInfo['發生時間']}\n\n根據分析，此案件已自動分發至「新北市交通局」。`;
-        
-        return {
-            message: `好的，感謝您提供資訊。此案件應歸類為「交通設施維護」類別。請問您是否需要立即向相關單位提交陳情？`,
-            caseSummary: summary
-        };
-    } else {
-        return {
-            message: `不好意思，我未能從您的描述中提取具體資訊。請提供更詳細的陳情內容。`
-        };
+    function showPage(pageId) {
+        pages.forEach(page => {
+            page.classList.remove('active');
+        });
+        document.getElementById(pageId).classList.add('active');
+
+        // 更新導航列的 active 狀態
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.dataset.page + '-page' === pageId) {
+                link.classList.add('active');
+            }
+        });
     }
-}
 
-// 動態新增訊息到聊天視窗
-function addMessage(text, sender) {
-    const messagesContainer = document.getElementById('messages');
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message');
-    if (sender === 'user') {
-        messageDiv.classList.add('user-message');
-    } else {
-        messageDiv.classList.add('system-message');
+    // 導航列點擊事件
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetPage = link.dataset.page;
+            showPage(targetPage + '-page');
+        });
+    });
+
+    // 英雄區塊按鈕點擊事件
+    heroButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetPage = button.dataset.page;
+            showPage(targetPage + '-page');
+        });
+    });
+
+    // 處理陳情頁面提交 (可在此添加實際提交邏輯)
+    const submitPetitionBtn = document.getElementById('submitPetition');
+    if (submitPetitionBtn) {
+        submitPetitionBtn.addEventListener('click', () => {
+            const content = document.getElementById('petitionContent').value;
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const phone = document.getElementById('contactPhone').value;
+            const consent = document.getElementById('privacyConsent').checked;
+
+            if (content && name && email && phone && consent) {
+                alert('陳情已送出！感謝您的寶貴意見。');
+                // 在這裡可以加入 AJAX 請求將資料發送到後端
+                // 例如:
+                // fetch('/api/submit-petition', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ content, name, email, phone })
+                // }).then(response => response.json())
+                // .then(data => {
+                //     alert('陳情已送出，案件編號：' + data.caseId);
+                //     showPage('query-page'); // 跳轉到查詢頁面
+                // })
+                // .catch(error => console.error('Error:', error));
+            } else {
+                alert('請填寫所有必填欄位並同意個資使用授權。');
+            }
+        });
     }
-    messageDiv.textContent = text;
-    messagesContainer.appendChild(messageDiv);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
 
-// 提交按鈕點擊事件
-function sendMessage() {
-    const userInput = document.getElementById('userInput');
-    const userText = userInput.value.trim();
-    if (userText === '') return;
-
-    // 1. 顯示使用者輸入的訊息
-    addMessage(userText, 'user');
-    userInput.value = '';
-
-    // 2. 模擬LLM處理並產生回應
-    setTimeout(() => {
-        const response = getLLMResponse(userText);
-        addMessage(response.message, 'system');
-
-        // 3. 如果有案件摘要，則顯示在右側區塊
-        if (response.caseSummary) {
-            document.getElementById('caseDetails').textContent = response.caseSummary;
-        }
-    }, 1000); // 延遲1秒模擬後台處理
-}
-
-// 綁定Enter鍵提交訊息
-document.getElementById('userInput').addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        sendMessage();
+    // 處理案件查詢按鈕 (可在此添加實際查詢邏輯)
+    const searchPetitionBtn = document.getElementById('searchPetitionBtn');
+    if (searchPetitionBtn) {
+        searchPetitionBtn.addEventListener('click', () => {
+            const query = document.getElementById('queryInput').value;
+            if (query) {
+                alert(`正在查詢案件：${query}`);
+                // 在這裡可以加入 AJAX 請求來獲取查詢結果
+                // 並更新 petitionList 的內容
+            } else {
+                alert('請輸入案件編號或關鍵字。');
+            }
+        });
     }
+
+    // 聊天機器人開關 (如果需要的話，可以讓它預設隱藏或只在特定頁面顯示)
+    // 這裡只是簡單的關閉功能
+    const closeChatbotBtn = document.querySelector('.close-chatbot');
+    const aiChatbotSidebar = document.querySelector('.ai-chatbot-sidebar');
+    if (closeChatbotBtn && aiChatbotSidebar) {
+        closeChatbotBtn.addEventListener('click', () => {
+            aiChatbotSidebar.style.display = 'none'; // 隱藏聊天機器人
+            // 或者切換一個 class 來實現更平滑的動畫
+            // aiChatbotSidebar.classList.remove('active');
+        });
+    }
+
+    // 處理聊天機器人訊息發送
+    const chatbotMessageInput = document.getElementById('chatbotMessageInput');
+    const chatbotSendBtn = document.querySelector('.chatbot-input button');
+    const chatbotBody = document.querySelector('.chatbot-body');
+
+    if (chatbotMessageInput && chatbotSendBtn && chatbotBody) {
+        const sendMessageToChatbot = () => {
+            const messageText = chatbotMessageInput.value.trim();
+            if (messageText) {
+                const userMessageDiv = document.createElement('div');
+                userMessageDiv.classList.add('chatbot-message', 'user');
+                userMessageDiv.textContent = messageText;
+                chatbotBody.appendChild(userMessageDiv);
+                chatbotMessageInput.value = '';
+                chatbotBody.scrollTop = chatbotBody.scrollHeight; // 滾動到底部
+
+                // 模擬 AI 回覆
+                setTimeout(() => {
+                    const botMessageDiv = document.createElement('div');
+                    botMessageDiv.classList.add('chatbot-message', 'bot');
+                    botMessageDiv.textContent = `您提問：「${messageText}」。我們的AI正在處理中，請稍候...`;
+                    chatbotBody.appendChild(botMessageDiv);
+                    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+                }, 1000);
+            }
+        };
+
+        chatbotSendBtn.addEventListener('click', sendMessageToChatbot);
+        chatbotMessageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessageToChatbot();
+            }
+        });
+    }
+
+    // 初始化顯示首頁
+    showPage('home-page');
 });

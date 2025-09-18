@@ -1,32 +1,206 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>民情慧眼 - 智慧陳情系統</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>民情慧眼 - 大語言模型輔助政府陳情追蹤系統</title>
+<link rel="stylesheet" href="style.css">
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>民情慧眼：智慧陳情系統</h1>
-        <div class="chatbot-window">
-            <div id="messages" class="messages">
-                <div class="message system-message">
-                    您好！我是您的智慧陳情小幫手，請簡要描述您的問題。
+<header class="main-header">
+<div class="top-bar">
+<div class="container">
+<div class="left-info">
+<img src="https://via.placeholder.com/20" alt="Republic of China Flag" class="flag-icon">
+<span class="service-line">Public Service Hotline: 1999</span> <i class="fas fa-phone-alt"></i>
+</div>
+<div class="right-info">
+<i class="fas fa-universal-access"></i> <a href="#">無障礙中心</a> / <a href="#">English</a>
+</div>
+</div>
+</div>
+<nav class="main-nav">
+<div class="container">
+<div class="logo">
+<img src="https://via.placeholder.com/40x40?text=AI" alt="民情慧眼 Logo">
+<h1>民情慧眼</h1>
+<p>大語言模型輔助政府陳情追蹤系統</p>
+</div>
+<ul class="nav-links">
+<li><a href="#" data-page="home" class="active">首頁</a></li>
+<li><a href="#" data-page="petition">我要陳情</a></li>
+<li><a href="#" data-page="query">案件查詢</a></li>
+<li><a href="#">最新消息</a></li>
+<li><a href="#">關於我們</a></li>
+</ul>
+<button class="btn-primary">Login/Register</button>
+</div>
+</nav>
+</header>
+code
+Code
+<main class="main-content">
+    <!-- Home Page Section -->
+    <section id="home-page" class="page active">
+        <div class="hero-section">
+            <div class="container">
+                <h2>有心想說？民情慧眼<br>能盡為你服務</h2>
+                <p>透過AI智能分案、即時智能回應，您心聲，政府聽得懂。</p>
+                <div class="hero-buttons">
+                    <button class="btn-secondary" data-page="petition"><i class="fas fa-edit"></i> 我要陳情</button>
+                    <button class="btn-secondary" data-page="query"><i class="fas fa-search"></i> 案件查詢</button>
                 </div>
             </div>
-            <div class="input-area">
-                <input type="text" id="userInput" placeholder="輸入您的陳情內容...">
-                <button onclick="sendMessage()">提交</button>
+        </div>
+        <div class="features-section container">
+            <div class="feature-item">
+                <i class="fas fa-robot"></i>
+                <h3>AI智慧分案</h3>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-clock"></i>
+                <h3>24/7即時回應</h3>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-comments"></i>
+                <h3>溝通零距離</h3>
             </div>
         </div>
-        <div class="case-info" id="caseInfo">
-            <h2>案件資訊</h2>
-            <div id="caseDetails" class="details-content">
-                <p>請提交您的陳情，此處將顯示案件摘要。</p>
+    </section>
+
+    <!-- Petition Page Section (結合了原 index-2.html 的聊天機器人概念) -->
+    <section id="petition-page" class="page">
+        <div class="petition-form-container container">
+            <div class="form-wrapper">
+                <h2>發布您的心聲</h2>
+                <p class="subtitle">您好！請詳細說明您的訴求，為您實現便捷服務建立更自由、精準人生活著。</p>
+
+                <div class="form-content">
+                    <div class="main-form">
+                        <div class="ai-hint">
+                            <i class="fas fa-lightbulb"></i> AI智能能夠協助您順利回報與聯繫你！
+                        </div>
+                        <textarea id="petitionContent" placeholder="請在此輸入您的陳情內容..." rows="10"></textarea>
+                        <p class="form-tip">
+                            我儘行陳思攻勢如雷部即完或竟徑從不允許，急迫多不給總驅動。方如有所區解層層一景，從新辦理護
+                        </p>
+                        <div class="input-group">
+                            <input type="text" placeholder="聯絡姓名" id="contactName">
+                            <input type="email" placeholder="Email" id="contactEmail">
+                            <input type="tel" placeholder="聯絡電話" id="contactPhone">
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="privacyConsent">
+                            <label for="privacyConsent">同意個資使用授權</label>
+                        </div>
+                        <button class="btn-primary" id="submitPetition">確認送出</button>
+                    </div>
+
+                    <div class="ai-analysis-sidebar petition-ai-sidebar">
+                        <h3>AI智能分析建議</h3>
+                        <div class="ai-card" id="aiCategory">
+                            <h4>案件類別</h4>
+                            <div class="category-tags">
+                                <span class="tag suggested"><i class="fas fa-circle green-dot"></i> 環境督導管理</span>
+                                <span class="tag"><i class="fas fa-circle blue-dot"></i> 公共安全</span>
+                                <span class="tag"><i class="fas fa-circle gray-dot"></i> 市政建議</span>
+                            </div>
+                        </div>
+                        <div class="ai-card" id="aiSummary">
+                            <h4>案件摘要</h4>
+                            <p><span class="label">主旨:</span> 公園遊憩區公園纜車案</p>
+                            <p><span class="label">時間:</span> 2023-05-10</p>
+                        </div>
+                        <div class="ai-card" id="aiRelated">
+                            <h4>相關歷史案件/SOP</h4>
+                            <p><span class="label">類似案件:</span> 關於大安森林公園噪音防治規定 (2023-05-10)</p>
+                            <p><span class="label">相關SOP:</span> 《區域級纜車維護維護SOP》</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Query Page Section -->
+    <section id="query-page" class="page">
+        <div class="query-container container">
+            <h2>追蹤我的陳情案件</h2>
+            <p class="subtitle">您好！請輸入案件編號或關鍵字進行查詢，或點擊查詢結果。</p>
+            <div class="search-bar">
+                <input type="text" placeholder="輸入案件編號或關鍵字進行查詢..." id="queryInput">
+                <button class="btn-primary" id="searchPetitionBtn"><i class="fas fa-search"></i> 查詢</button>
+            </div>
+
+            <div class="query-content">
+                <div class="petition-list" id="petitionList">
+                    <!-- Simulated Petition Cards will be inserted here by JS -->
+                    <div class="petition-card">
+                        <span class="card-title">案件編號</span>
+                        <p>NTPC-20240917-00123</p>
+                        <span class="label">案件主旨</span>
+                        <p class="status processing"><i class="fas fa-circle green-dot"></i> 遊憩設施損壞回報</p>
+                        <span class="status-text">處理中</span>
+                        <p class="last-update">最後更新: 2024-10-30 16:00</p>
+                        <button class="btn-link">閱覽</button>
+                    </div>
+                    <div class="petition-card">
+                        <span class="card-title">案件編號</span>
+                        <p>NTPC-20240917-00124</p>
+                        <span class="label">案件主旨</span>
+                        <p class="status filed"><i class="fas fa-circle blue-dot"></i> 噪音陳情回覆</p>
+                        <span class="status-text">已分文</span>
+                        <p class="last-update">最後更新: 2024-10-29 10:30</p>
+                        <button class="btn-link">閱覽</button>
+                    </div>
+                    <div class="petition-card">
+                        <span class="card-title">案件編號</span>
+                        <p>NTPC-20240916-0012E</p>
+                        <span class="label">案件主旨</span>
+                        <p class="status closed"><i class="fas fa-circle gray-dot"></i> 遊憩區環境維護問題</p>
+                        <span class="status-text">已結案</span>
+                        <p class="last-update">最後更新: 2024-10-25 14:15</p>
+                        <button class="btn-link">閱覽</button>
+                    </div>
+                </div>
+
+                <div class="ai-chatbot-sidebar">
+                    <div class="chatbot-header">
+                        <h3>AI智慧客服</h3>
+                        <button class="close-chatbot"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="chatbot-body">
+                        <div class="chatbot-message bot">您好，有什麼我可以協助您的嗎？</div>
+                        <div class="chatbot-message user">我想查詢我的陳情進度</div>
+                        <div class="chatbot-message bot">請提供您的案件編號或關鍵字。</div>
+                    </div>
+                    <div class="chatbot-input">
+                        <input type="text" placeholder="輸入您的問題..." id="chatbotMessageInput">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-left">
+            <p>版權所有 © 2025 副住任慧眼</p>
+        </div>
+        <div class="footer-right">
+            <a href="#">責任</a>
+            <a href="#">致社會即</a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
         </div>
     </div>
-    <script src="script.js"></script>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
